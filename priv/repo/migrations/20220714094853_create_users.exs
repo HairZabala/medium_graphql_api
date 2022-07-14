@@ -3,7 +3,7 @@ defmodule MediumGraphqlApi.Repo.Migrations.CreateUsers do
 
   def change do
     create table(:users) do
-      add :firt_name, :string
+      add :first_name, :string
       add :last_name, :string
       add :email, :string
       add :password_hash, :string

@@ -12,7 +12,7 @@ defmodule MediumGraphqlApi.AccountsFixtures do
       attrs
       |> Enum.into(%{
         email: "some email",
-        firt_name: "some firt_name",
+        first_name: "some first_name",
         last_name: "some last_name",
         password_hash: "some password_hash",
         role: "some role"

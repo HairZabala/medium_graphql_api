@@ -8,7 +8,7 @@ defmodule MediumGraphqlApi.AccountsTest do
 
     import MediumGraphqlApi.AccountsFixtures
 
-    @invalid_attrs %{email: nil, firt_name: nil, last_name: nil, password_hash: nil, role: nil}
+    @invalid_attrs %{email: nil, first_name: nil, last_name: nil, password_hash: nil, role: nil}
 
     test "list_users/0 returns all users" do
       user = user_fixture()
@@ -23,7 +23,7 @@ defmodule MediumGraphqlApi.AccountsTest do
     test "create_user/1 with valid data creates a user" do
       valid_attrs = %{
         email: "some email",
-        firt_name: "some firt_name",
+        first_name: "some first_name",
         last_name: "some last_name",
         password_hash: "some password_hash",
         role: "some role"
@@ -31,7 +31,7 @@ defmodule MediumGraphqlApi.AccountsTest do
 
       assert {:ok, %User{} = user} = Accounts.create_user(valid_attrs)
       assert user.email == "some email"
-      assert user.firt_name == "some firt_name"
+      assert user.first_name == "some first_name"
       assert user.last_name == "some last_name"
       assert user.password_hash == "some password_hash"
       assert user.role == "some role"
@@ -46,7 +46,7 @@ defmodule MediumGraphqlApi.AccountsTest do
 
       update_attrs = %{
         email: "some updated email",
-        firt_name: "some updated firt_name",
+        first_name: "some updated first_name",
         last_name: "some updated last_name",
         password_hash: "some updated password_hash",
         role: "some updated role"
@@ -54,7 +54,7 @@ defmodule MediumGraphqlApi.AccountsTest do
 
       assert {:ok, %User{} = user} = Accounts.update_user(user, update_attrs)
       assert user.email == "some updated email"
-      assert user.firt_name == "some updated firt_name"
+      assert user.first_name == "some updated first_name"
       assert user.last_name == "some updated last_name"
       assert user.password_hash == "some updated password_hash"
       assert user.role == "some updated role"

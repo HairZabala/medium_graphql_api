@@ -4,7 +4,7 @@ defmodule MediumGraphqlApi.Accounts.User do
 
   schema "users" do
     field(:email, :string)
-    field(:firt_name, :string)
+    field(:first_name, :string)
     field(:last_name, :string)
     field(:password_hash, :string)
     field(:password, :string, virtual: true)
@@ -17,8 +17,8 @@ defmodule MediumGraphqlApi.Accounts.User do
   @doc false
   def changeset(user, attrs) do
     user
-    |> cast(attrs, [:firt_name, :last_name, :email, :password, :password_confirmation, :role])
-    |> validate_required([:firt_name, :last_name, :email, :password, :password_confirmation, :role])
+    |> cast(attrs, [:first_name, :last_name, :email, :password, :password_confirmation, :role])
+    |> validate_required([:first_name, :last_name, :email, :password, :password_confirmation, :role])
     |> validate_format(:email, ~r/@/)
     |> update_change(:email, &String.downcase(&1))
     |> validate_length(:password, min: 6, max: 100)
@@ -28,8 +28,8 @@ defmodule MediumGraphqlApi.Accounts.User do
 
   end
 
-  defp hash_password(changeset) do
-    changeset
+  defp hash_password(current_changeset) do
+    current_changeset
   end
 
 end
