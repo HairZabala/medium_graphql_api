@@ -1,12 +1,12 @@
-defmodule MediumGraphqlApi.Accounts do
+defmodule MediumGraphqlApi.User.UserContext do
   @moduledoc """
-  The Accounts context.
+  The User context.
   """
 
   import Ecto.Query, warn: false
   alias MediumGraphqlApi.Repo
 
-  alias MediumGraphqlApi.Accounts.User
+  alias MediumGraphqlApi.User.User
 
   @doc """
   Returns the list of users.

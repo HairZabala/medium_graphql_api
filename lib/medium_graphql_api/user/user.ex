@@ -1,4 +1,5 @@
-defmodule MediumGraphqlApi.Accounts.User do
+defmodule MediumGraphqlApi.User.User do
+
   use Ecto.Schema
   import Ecto.Changeset
 
