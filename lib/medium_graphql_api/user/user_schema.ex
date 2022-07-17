@@ -1,5 +1,6 @@
 defmodule MediumGraphqlApi.User.UserSchema do
   use Absinthe.Schema.Notation
+  alias MediumGraphqlApi.Middleware.EctoErrors
 
   # ==== Return Types ====
 
@@ -26,6 +27,16 @@ defmodule MediumGraphqlApi.User.UserSchema do
     field :users, list_of(:user_type) do
       # Resolver
       resolve(&MediumGraphqlApi.User.UserResolver.users/3)
+    end
+  end
+
+  # ==== Mutation Types ====
+  object :user_mutations do
+    @desc "Creates a new user"
+    field :register_user, non_null(:user_type) do
+      arg(:input, non_null(:user_input_type))
+      resolve(&MediumGraphqlApi.User.UserResolver.register_new_user/3)
+      middleware(EctoErrors, [])
     end
   end
 end

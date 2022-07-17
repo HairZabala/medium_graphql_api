@@ -30,7 +30,19 @@ defmodule MediumGraphqlApi.User.User do
   end
 
   defp hash_password(current_changeset) do
-    current_changeset
+    case current_changeset do
+      %Ecto.Changeset{
+        valid?: true,
+        changes: %{
+          password: password
+        }
+      } ->
+        current_changeset
+        |> put_change(:password_hash, Bcrypt.hash_pwd_salt(password))
+
+      _ ->
+        current_changeset
+    end
   end
 
 end
