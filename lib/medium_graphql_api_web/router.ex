@@ -3,6 +3,7 @@ defmodule MediumGraphqlApiWeb.Router do
 
   pipeline :api do
     plug(:accepts, ["json"])
+    plug MediumGraphqlApiWeb.Plug.Context
   end
 
   scope "/" do

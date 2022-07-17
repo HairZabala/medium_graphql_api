@@ -1,7 +1,8 @@
 defmodule MediumGraphqlApi.User.UserResolver do
   alias MediumGraphqlApi.User.{UserService, UserContext}
 
-  def users(_parent, _args, _resolution) do
+  def users(_parent, _args, %{context: context}) do
+    IO.inspect(context);
     {:ok, UserContext.list_users()}
   end
 
