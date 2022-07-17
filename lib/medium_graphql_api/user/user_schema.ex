@@ -12,6 +12,12 @@ defmodule MediumGraphqlApi.User.UserSchema do
     field(:role, :string)
   end
 
+  object :session do
+    field(:token, non_null(:string))
+    field(:user, non_null(:user_type))
+  end
+
+
   # ==== Input Types ====
   input_object :user_input_type do
     field(:first_name, non_null(:string))
@@ -36,6 +42,14 @@ defmodule MediumGraphqlApi.User.UserSchema do
     field :register_user, non_null(:user_type) do
       arg(:input, non_null(:user_input_type))
       resolve(&MediumGraphqlApi.User.UserResolver.register_new_user/3)
+      middleware(EctoErrors, [])
+    end
+
+    @desc "Creates an authorization bearer token for a user"
+    field :login, non_null(:session) do
+      arg(:email, non_null(:string))
+      arg(:password, non_null(:string))
+      resolve(&MediumGraphqlApi.User.UserResolver.login_mutation/3)
       middleware(EctoErrors, [])
     end
   end

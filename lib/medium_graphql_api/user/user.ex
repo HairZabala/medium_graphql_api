@@ -1,7 +1,10 @@
 defmodule MediumGraphqlApi.User.User do
 
   use Ecto.Schema
+  
   import Ecto.Changeset
+  import Ecto.Query
+  alias MediumGraphqlApi.User.User
 
   schema "users" do
     field(:email, :string)
@@ -42,6 +45,27 @@ defmodule MediumGraphqlApi.User.User do
 
       _ ->
         current_changeset
+    end
+  end
+
+  def with_email(query, email) do
+    query
+    |> where([u], u.email == ^email)
+  end
+
+
+  def verify_password(%User{password_hash: nil}, _) do
+    {:error, :password_not_set}
+  end
+
+  def verify_password(%User{password_hash: _password_hash} = user, password) do
+    case Bcrypt.check_pass(user, password) do
+      {:ok, _user} = result ->
+        result
+
+      _else ->
+        Logger.log(:info, "Ivalid password attempted for user #{user.id}", user_id: user.id)
+        {:error, :invalid_credentials}
     end
   end
 

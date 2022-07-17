@@ -101,4 +101,11 @@ defmodule MediumGraphqlApi.User.UserContext do
   def change_user(%User{} = user, attrs \\ %{}) do
     User.changeset(user, attrs)
   end
+
+  def get_user_by_email(email) do
+    User
+    |> User.with_email(String.downcase(email))
+    |> Repo.one()
+  end
+
 end

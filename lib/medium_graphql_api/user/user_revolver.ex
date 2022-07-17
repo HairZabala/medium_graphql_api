@@ -1,5 +1,5 @@
 defmodule MediumGraphqlApi.User.UserResolver do
-  alias MediumGraphqlApi.User.UserContext
+  alias MediumGraphqlApi.User.{UserService, UserContext}
 
   def users(_parent, _args, _resolution) do
     {:ok, UserContext.list_users()}
@@ -10,5 +10,12 @@ defmodule MediumGraphqlApi.User.UserResolver do
     %{input: input},
     _resolution) do
     UserContext.create_user(input)
+  end
+
+  def login_mutation(
+    _parent, 
+    args,
+    _resolution) do
+    UserService.login(args)
   end
 end
