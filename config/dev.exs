@@ -58,7 +58,6 @@ config :medium_graphql_api,
        issuer: "medium_graphql_api",
        secret_key: "7sIppJ9Z0jw1tkkVyWjFeQphRdl0NsQBXW5ZjqIgWbhvdl5roimXUr5w/P5obAgn"
 
-
 # Do not include metadata nor timestamps in development logs
 config :logger, :console, format: "[$level] $message\n"
 

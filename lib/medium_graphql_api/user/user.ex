@@ -1,7 +1,6 @@
 defmodule MediumGraphqlApi.User.User do
-
   use Ecto.Schema
-  
+
   import Ecto.Changeset
   import Ecto.Query
   alias MediumGraphqlApi.User.User
@@ -13,7 +12,7 @@ defmodule MediumGraphqlApi.User.User do
     field(:password_hash, :string)
     field(:password, :string, virtual: true)
     field(:password_confirmation, :string, virtual: true)
-    field(:role, :string, default: "user")
+    field(:role, Ecto.Enum, values: [:user, :admin], default: :user)
 
     timestamps()
   end
@@ -22,14 +21,20 @@ defmodule MediumGraphqlApi.User.User do
   def changeset(user, attrs) do
     user
     |> cast(attrs, [:first_name, :last_name, :email, :password, :password_confirmation, :role])
-    |> validate_required([:first_name, :last_name, :email, :password, :password_confirmation, :role])
+    |> validate_required([
+      :first_name,
+      :last_name,
+      :email,
+      :password,
+      :password_confirmation,
+      :role
+    ])
     |> validate_format(:email, ~r/@/)
     |> update_change(:email, &String.downcase(&1))
     |> validate_length(:password, min: 6, max: 100)
     |> validate_confirmation(:password)
     |> unique_constraint(:email, message: "email_is_already_in_use")
     |> hash_password
-
   end
 
   defp hash_password(current_changeset) do
@@ -53,7 +58,6 @@ defmodule MediumGraphqlApi.User.User do
     |> where([u], u.email == ^email)
   end
 
-
   def verify_password(%User{password_hash: nil}, _) do
     {:error, :password_not_set}
   end
@@ -68,5 +72,4 @@ defmodule MediumGraphqlApi.User.User do
         {:error, :invalid_credentials}
     end
   end
-
 end

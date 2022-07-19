@@ -11,13 +11,14 @@ defmodule MediumGraphqlApi.AccountsFixtures do
     {:ok, user} =
       attrs
       |> Enum.into(%{
-        email: "some email",
-        first_name: "some first_name",
-        last_name: "some last_name",
-        password_hash: "some password_hash",
-        role: "some role"
+        email: "hair@google.com",
+        first_name: "Hair",
+        last_name: "Zabala",
+        password: "Abc123",
+        password_confirmation: "Abc123",
+        role: :user
       })
-      |> MediumGraphqlApi.Accounts.create_user()
+      |> MediumGraphqlApi.User.UserContext.create_user()
 
     user
   end

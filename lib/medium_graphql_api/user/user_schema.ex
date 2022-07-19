@@ -1,22 +1,26 @@
 defmodule MediumGraphqlApi.User.UserSchema do
   use Absinthe.Schema.Notation
-  alias MediumGraphqlApi.Middleware.EctoErrors
+  alias MediumGraphqlApi.Middleware.{Authorize, EctoErrors}
+
+  # ==== Enum Types ====
+  enum :user_role do
+    value(:user)
+    value(:admin)
+  end
 
   # ==== Return Types ====
-
   object :user_type do
     field(:id, :id)
     field(:first_name, :string)
     field(:last_name, :string)
     field(:email, :string)
-    field(:role, :string)
+    field(:role, non_null(:user_role))
   end
 
   object :session do
     field(:token, non_null(:string))
     field(:user, non_null(:user_type))
   end
-
 
   # ==== Input Types ====
   input_object :user_input_type do
@@ -31,7 +35,7 @@ defmodule MediumGraphqlApi.User.UserSchema do
   object :user_queries do
     @desc "Get a list of all users"
     field :users, list_of(:user_type) do
-      # Resolver
+      middleware(Authorize, [:user, :admin])
       resolve(&MediumGraphqlApi.User.UserResolver.users/3)
     end
   end

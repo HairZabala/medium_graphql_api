@@ -4,7 +4,7 @@ defmodule MediumGraphqlApi.User.UserService do
   require Logger
   alias MediumGraphqlApi.User.{User, UserContext}
   alias MediumGraphqlApi.Guardian
-  
+
   def login(%{email: email, password: password}) do
     case UserContext.get_user_by_email(email) do
       %User{} = user ->
@@ -30,5 +30,4 @@ defmodule MediumGraphqlApi.User.UserService do
         {:error, :invalid_credentials}
     end
   end
-
 end
